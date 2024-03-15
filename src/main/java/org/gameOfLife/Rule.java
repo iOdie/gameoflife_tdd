@@ -1,19 +1,21 @@
 package org.gameOfLife;
 
+import java.util.function.Predicate;
+
 public class Rule {
 
 
-    private final int expectedAmountOfAliveNeighbors;
+    private final Predicate<Integer> filterExpectedAmountOfAliveNeighbors;
     private final FieldType expectedCellState;
 
-    public Rule(int expectedAmountOfAliveNeighbors, FieldType expectedCellState) {
+    public Rule(Predicate<Integer> filterExpectedAmountOfAliveNeighbors, FieldType expectedCellState) {
 
-        this.expectedAmountOfAliveNeighbors = expectedAmountOfAliveNeighbors;
+        this.filterExpectedAmountOfAliveNeighbors = filterExpectedAmountOfAliveNeighbors;
         this.expectedCellState = expectedCellState;
     }
 
     public boolean decideIfCellShouldBeAlive(int aliveNeighborsOfCheckedCell, FieldType cellStateOfCheckedCell) {
 
-        return expectedAmountOfAliveNeighbors == aliveNeighborsOfCheckedCell && expectedCellState == cellStateOfCheckedCell;
+        return filterExpectedAmountOfAliveNeighbors.test(aliveNeighborsOfCheckedCell) && expectedCellState == cellStateOfCheckedCell;
     }
 }

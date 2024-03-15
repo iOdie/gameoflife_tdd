@@ -9,11 +9,11 @@ import java.util.function.Predicate;
 public class RuleTest {
 
     @Test
-    public void decideIfCellShouldBeAlive_Should_ReturnTrueForMatchingAmountOfAliveNeighbors_AndMatchingStatusOfItself () {
+    public void decideIfCellShouldBeAlive_Should_ReturnTrueForMatchingNeighborFilter_AndMatchingStatusOfItself () {
         //GIVEN
-        int amountAliveNeighbors = 3;
+        Predicate<Integer> neighborFilter = (it) -> it == 3;
         FieldType cellState = FieldType.ALIVE;
-        Rule rule = new Rule(amountAliveNeighbors, cellState);
+        Rule rule = new Rule(neighborFilter, cellState);
         //WHEN
         boolean result = rule.decideIfCellShouldBeAlive(3, FieldType.ALIVE);
         //THEN
@@ -21,11 +21,11 @@ public class RuleTest {
     }
 
     @Test
-    public void decideIfCellShouldBeAlive_Should_ReturnFalseForUnatchingAmountOfAliveNeighbors_AndMatchingStatusOfItself () {
+    public void decideIfCellShouldBeAlive_Should_ReturnFalseForUnmatchingNeighborFilter_AndMatchingStatusOfItself () {
         //GIVEN
-        int amountAliveNeighbors = 3;
+        Predicate<Integer> neighborFilter = (it) -> it == 6;
         FieldType cellState = FieldType.ALIVE;
-        Rule rule = new Rule(amountAliveNeighbors, cellState);
+        Rule rule = new Rule(neighborFilter, cellState);
         //WHEN
         boolean result = rule.decideIfCellShouldBeAlive(5, FieldType.ALIVE);
         //THEN
@@ -33,11 +33,11 @@ public class RuleTest {
     }
 
     @Test
-    public void decideIfCellShouldBeAlive_Should_ReturnFalseForMatchingAmountOfAliveNeighbors_AndUnmatchingStatusOfItself () {
+    public void decideIfCellShouldBeAlive_Should_ReturnFalseForMatchingNeighborFilter_AndUnmatchingStatusOfItself () {
         //GIVEN
-        int amountAliveNeighbors = 8;
+        Predicate<Integer> neighborFilter = (it) -> it == 8;
         FieldType cellState = FieldType.ALIVE;
-        Rule rule = new Rule(amountAliveNeighbors, cellState);
+        Rule rule = new Rule(neighborFilter, cellState);
         //WHEN
         boolean result = rule.decideIfCellShouldBeAlive(8, FieldType.UNALIVE);
         //THEN
@@ -45,11 +45,11 @@ public class RuleTest {
     }
 
     @Test
-    public void decideIfCellShouldBeAlive_Should_ReturnFalseForUnmatchingAmountOfAliveNeighbors_AndUnmatchingStatusOfItself () {
+    public void decideIfCellShouldBeAlive_Should_ReturnFalseForUnmatchingNeighborFilter_AndUnmatchingStatusOfItself () {
         //GIVEN
-        Predicate<Integer> amountAliveNeighbors = (it) -> it < 2;
+        Predicate<Integer> neighborFilter = (it) -> it < 2;
         FieldType cellState = FieldType.ALIVE;
-        Rule rule = new Rule(amountAliveNeighbors, cellState);
+        Rule rule = new Rule(neighborFilter, cellState);
         //WHEN
         boolean result = rule.decideIfCellShouldBeAlive(7, FieldType.UNALIVE);
         //THEN
